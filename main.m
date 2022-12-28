@@ -1,4 +1,4 @@
-n_bits = 100;
+n_bits = 1000;
 amplitude = 1;
 variance = 0.25;
 sigma = sqrt(variance);
