@@ -1,10 +1,11 @@
-n_bits = 1e5;
-amplitude = 5;
+n_bits = 10000;
+amplitude = 1;
 rng('default'); % For reproducibility
 % X = directbinornd(1,0.3,n_bits,1);
 % Xn = awgn(X, 0.3);
 X = generateBits(n_bits, amplitude);
-Xn = wgn(n_bits, 1, 0.9, 'linear');
+Xn = wgn(n_bits, 1, 1, 'linear');
+
 % histogram(X,101);
 
 err = 0;
@@ -18,7 +19,7 @@ for i = 1 : 1 : n_bits
 end
 
 for i = 1 : 1 : n_bits
-    if Xn(i, 1) == X(i, 1)
+    if Xn(i, 1) ~= X(i, 1)
         err = err + 1;
     end
 end
