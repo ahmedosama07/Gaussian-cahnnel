@@ -1,7 +1,6 @@
 n_bits = 1000;                              % bits count
-amplitude = 1;                              % voltage corresponding to '1' valued bit
+amplitude = 5;                              % voltage corresponding to '1' valued bit
 variance = 0.25;                            % variance for the normal distributed noise
-sigma = sqrt(variance);                     % sigma for the normal distributed noise
 bits = generateBits(n_bits, amplitude);     % Transmitter
 
 % Transmitted signal plot
@@ -12,7 +11,7 @@ title('Transmitted signal');
 xlabel('signal');
 ylabel('V');
 
-noise = normrnd(0,sigma,[n_bits,1]);        % Gaussian noise (as gaussian distribution is a zero mean normal distribution)
+noise = addGaussianNoise(variance, n_bits);        % Gaussian noise
 
 % Noise plot
 subplot(4, 1, 2);
@@ -48,14 +47,6 @@ xlabel('signal');
 ylabel('V');
 
 % Error count
-[E, R] = biterr(bits, filtered);
-fprintf('BER = %f\n', R);
-
-err = 0;
-for i = 1 : 1 : n_bits
-    if filtered(i, 1) ~= bits(i, 1)
-        err = err + 1;
-    end
-end
-
-BER = err / n_bits;
+bits = bits /amplitude;
+[ERR, BER] = biterr(bits, filtered);
+fprintf('The bit error rate (BER) = %f\n', BER);
